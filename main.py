@@ -2,7 +2,6 @@ import requests
 import os
 from flask import Flask, request, jsonify
 
-# Configurações
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 INSTAGRAM_BUSINESS_ACCOUNT_ID = 'guisteps'
 POST_ID = 'ID_DO_POST'
