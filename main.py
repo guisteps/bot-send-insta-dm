@@ -1,5 +1,6 @@
 import requests
 import os
+import datetime
 from flask import Flask, request, jsonify
 
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
@@ -9,6 +10,11 @@ KEYWORD = 'palavra-chave'
 LINK_TO_SEND = 'https://exemplo.com'
 
 app = Flask(__name__)
+
+@app.route('/')
+def alive():
+    now = datetime.datetime.now()
+    return f'olá {now}'
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
