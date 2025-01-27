@@ -1,5 +1,6 @@
 import requests
 import os
+from flask import Flask, request, jsonify
 
 # Configurações
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
@@ -7,6 +8,24 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID = 'guisteps'
 POST_ID = 'ID_DO_POST'
 KEYWORD = 'palavra-chave'
 LINK_TO_SEND = 'https://exemplo.com'
+
+app = Flask(__name__)
+
+@app.route('/webhook', methods=['GET', 'POST'])
+def webhook():
+    if request.method == 'GET':
+        hub_verify_token = request.args.get('hub.verify_token')
+        if hub_verify_token == 'SEU_TOKEN_DE_VERIFICACAO':
+            return request.args.get('hub.challenge')
+        return 'Token inválido', 403
+
+    elif request.method == 'POST':
+        data = request.json
+        print(data)  
+        return jsonify({'status': 'success'}), 200
+
+if __name__ == '__main__':
+    app.run(port=5000)
 
 # Função para verificar comentários
 def check_comments():
